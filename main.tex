@@ -1,0 +1,1192 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169]{beamer}
+
+\mode<presentation> {
+
+  \usetheme{Boadilla} % light
+
+  \usecolortheme{seahorse} % light
+
+  \input{./cvut_colors.tex}
+
+  % \setbeamertemplate{footline} % remove the footer line
+  % \setbeamertemplate{footline}[page number] % replace the footer line with simple numbers
+
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{bibliography item}{\insertbiblabel} % removing the navigation symbols
+
+}
+
+%%{ Docu HEAD
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{multimedia}
+\newcommand{\superfill}{\vskip0pt plus 1filll}
+
+\usepackage{isotope}
+\usepackage{animate}
+
+\usepackage[export]{adjustbox}
+
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{multirow,tabularx,makecell}
+
+\usepackage{pdfpcnotes}
+
+\usefonttheme{professionalfonts}
+\usepackage{amsmath,amsfonts,amssymb,bm}
+
+\usepackage[backend=bibtex,defernumbers=true,style=ieee,sorting=none,sortcites=false]{biblatex}
+
+\renewcommand*{\bibfont}{\normalfont\tiny}
+
+% Print labelnumbers with suffixes, adjust secondary labelnumber 2/2
+\DeclareFieldFormat{labelnumber}{%
+  \ifkeyword{mine}
+  {\ifkeyword{core}
+  {{\number\numexpr#1}}%
+  {{\number\numexpr#1}}%
+  }%
+  {#1}%
+  }
+
+  \DeclareCiteCommand{\tabcite}%[\mkbibbrackets]
+  {\usebibmacro{cite:init}%
+  \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+  \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}%
+  \usebibmacro{postnote}}
+
+  % {{\number\numexpr#1-\value{bbx:primcount}}a}
+
+  %%{ fullcite box
+
+  \usepackage{tcolorbox}
+
+  \definecolor{light-gray}{gray}{0.95}
+  \newcommand{\fullciteinbox}[2]{%
+
+    \DeclareCiteCommand{\fullcite}
+    {\usebibmacro{prenote}}
+    {\clearfield{addendum}%
+    \clearfield{issn}%
+    \usedriver
+    {\defcounter{minnames}{6}%
+    \defcounter{maxnames}{6}}
+    {\thefield{entrytype}}}
+    {\multicitedelim}
+    {\usebibmacro{postnote}}
+
+    %\vspace{3em}%
+    %\raisebox{3em}[3em][3em]{%
+    % \vspace{-0.2em}
+    % \begin{tcolorbox}[width=\textwidth,colback={light-gray},title={}]%
+    \begin{block}{}
+      \begin{minipage}[t]{0.07\linewidth}%
+        \raggedright%
+        \scriptsize \cite{#1}%
+      \end{minipage}%
+      \begin{minipage}[t]{0.93\linewidth}%
+        \scriptsize \fullcite{#1}%
+        \ifx&#2&
+        \else
+        \\
+        \url{#2}
+        \fi
+      \end{minipage}%
+      % \end{tcolorbox}%
+    \end{block}
+    %}%
+    \vspace{-0.3em}
+    }%
+
+    %%}
+
+    \addbibresource{main.bib}
+
+    \defbibenvironment{favoritebib}
+  {\itemize}
+    {\enditemize}
+  {\item}
+    \usepackage{siunitx}
+    \DeclareSIUnit \parsec {pc}
+    \DeclareSIUnit \electronvolt {eV}
+    \DeclareSIUnit \pixel {px}
+    \DeclareSIUnit \arcmin {arcmin}
+    \DeclareSIUnit \erg {erg}
+    \DeclareSIUnit \joul {J}
+    \DeclareSIUnit \Bq {Bq}
+
+    \usepackage{enumitem} % To enable enumerate with letters (a, b, c...)
+    \newlist{alphalist}{enumerate}{1}
+    \setlist[alphalist]{label=\alph*)}
+    \setlist[itemize]{label=\textbullet}
+
+    \usepackage{cellspace}
+    \newcolumntype{D}{>{\hfill}N{3}{2}<{\hfill}}
+    \newcommand*\cellspacelimit[2]{\setlength{\cellspacetoplimit}{#1}\setlength{\cellspacebottomlimit}{#2}}
+
+    % figures
+    \usepackage{wrapfig}
+    % \usepackage[font={footnotesize}]{caption}
+    \usepackage[font={small}]{caption}
+    % \usepackage{subcaption}
+
+    % subfloat
+    \usepackage{subfig}
+    % \usepackage[export]{adjustbox}
+
+    \usepackage{color}
+    \usepackage{url}
+
+    %%{ tikz
+
+    \usepackage{tikz}
+    \usepackage{pgfplots}
+    \pgfplotsset{compat=1.14}
+    \usetikzlibrary{backgrounds,arrows,automata,shapes,positioning,calc,through,spy,shapes,shapes.geometric,shapes.multipart,fit,patterns,fadings}
+    \pgfdeclarelayer{background}
+    \pgfdeclarelayer{foreground}
+    \pgfsetlayers{background,main,foreground}
+
+    \input{./fig/tikz/tikz.tex}
+
+    \tikzset{
+      imgletter/.style={
+        rectangle,
+        inner sep=2pt,
+        rounded corners=.1em,
+        text=black,
+        minimum height=1em,
+        text centered,
+        fill=white,
+        fill opacity=1.0,
+        text opacity=1,
+        anchor=south west,
+      },
+    }
+
+    %%}
+
+    \usepackage{pdfpc-movie}
+    \newcommand{\mymovie}[3][]{\pdfpcmovie[#1]{#2}{#3}}
+    % \newcommand{\mymovie}[3][]{\movie[#1]{#2}{#3}}
+
+    %%{ ARROWS IN TIKZ
+
+    \tikzset{
+      myarrow/.style={
+        draw,
+        fill=orange,
+        single arrow,
+        minimum height=3.5ex,
+        single arrow head extend=1ex
+      }
+    }
+
+    \newcommand{\arrowup}{%
+      \vspace{-0.8em}
+      \tikz [baseline=-0.5ex]{\node [myarrow,rotate=90] {};}
+      \vspace{-1.4em}
+      }
+
+      \newcommand{\arrowdown}{%
+        \vspace{-0.8em}
+        \tikz [baseline=-1ex]{\node [myarrow,rotate=-90] {};}
+        \vspace{-1.5em}
+        }
+
+        \newcommand{\arrowright}{%
+          \tikz [baseline=-1ex]{\node [myarrow,rotate=0] {};}
+          }
+
+          \newcommand{\arrowleft}{%
+            \tikz [baseline=-1ex]{\node [myarrow,rotate=180] {};}
+            }
+
+            %%}
+
+            %%{ CHECKMARK IN TIKZ
+
+            \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+            %%}
+
+    \newcommand{\strong}[1]{\textbf{#1}}
+    \newcommand{\coord}[1]{\textbf{#1}}
+    \newcommand{\norm}[1]{\left\lvert#1\right\rvert}
+    \newcommand{\m}[1]{\ensuremath{\mathbf{#1}}}
+    \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+    \newcommand{\corrected}[1]{{\color{black} {#1}}}
+    % \newcommand{\comment}[1]{{\color{blue} {#1}}}
+    \newcommand{\add}[1]{{\color{green} {#1}}}
+    \newcommand{\todo}[1]{{\color{red} TODO {#1}}}
+    \newcommand{\updated}[1]{{\color{blue} {#1}}}
+    \newcommand{\reffig}[1]{Fig.~\ref{#1}}
+    \newcommand{\refalg}[1]{Alg.~\ref{#1}}
+    \newcommand{\refsec}[1]{Sec.~\ref{#1}}
+    \newcommand{\reftab}[1]{Table~\ref{#1}}
+    \newcommand{\real}{\mathbb{R}}
+    \newcommand{\red}[1]{{\color{red} #1}}
+    \newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+    \newcommand{\plus}{\scalebox{0.8}[0.8]{$+$}}
+    \newcommand{\figvspace}{\vspace{-1em}} % this may eventually do something, so far just a placeholder
+
+    % \usepackage{pgf}
+    % \logo{\pgfputat{\pgfxy(0,5)}{\pgfbox[right,base]{\includegraphics[height=0.8cm]{}}}}
+    % \newcommand{\nologo}{\setbeamertemplate{logo}{}}
+
+    % \usepackage{eso-pic}
+    % \newcommand\AtPagemyUpperLeft[1]{\AtPageLowerLeft{\put(\LenToUnit{0.66\paperwidth},\LenToUnit{0.904\paperheight}){#1}}}
+    % \AddToShipoutPictureFG{
+    %   \AtPagemyUpperLeft{{\includegraphics[height=0.85cm,keepaspectratio]{fig/logo_ctu_fee_mrs_blue.png}}}
+    % }
+    % \newcommand{\AddToShipoutPictureFG}{\setbeamertemplate{logo}{}}
+
+    %%}
+
+    %%{ TITLE PAGE
+
+
+    \title[MRS UAV System]{MRS UAV System for real-world testing and development}
+    \subtitle{From control theory to practice}
+    \author[Tomas Baca]{{Tomas Baca, Ph.D.} \\
+    }
+    \institute[CTU in Prague] {
+      \begin{small}
+        Multi-Robot Systems group, Faculty of Electrical Engineering\\
+        Czech Technical University in Prague
+      \end{small}}
+
+    \date[June 23rd, 2022]{}
+
+    \titlegraphic{\includegraphics[width=5cm]{fig/logo_ctu_fee_mrs_blue.png}}
+
+    \begin{document}
+
+    \begin{frame}
+
+      \titlepage % Print the title page as the first slide
+
+    \end{frame}
+
+    % \nologo
+
+    %%}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{UAV Experimentation in MRS}
+
+%%{ UAV Experimentation in MRS
+
+\begin{frame}
+  \frametitle{UAV Experimentation in MRS --- 2012--2015}
+
+  \only<+>{\begin{block}{$\approx$ 2012, designing custom PCBs for controllers}
+    \centering
+    \includegraphics[width=0.48\textwidth]{fig/photos/pcb1.jpg}
+    \includegraphics[width=0.48\textwidth]{fig/photos/first_UAV.jpg}
+  \end{block}}
+
+  \only<+>{\begin{block}{$\approx$ 2014, Model Predictive Control on embedded hardware}
+    \centering
+    \includegraphics[width=0.48\textwidth]{fig/photos/pcb2.jpg}
+    \includegraphics[width=0.48\textwidth]{fig/photos/prase.jpg}
+
+    \fullciteinbox{baca2016embedded}{}
+  \end{block}}
+
+  \only<+>{\begin{block}{Embedded Model Predictive Control}
+    \begin{center}
+
+      \mymovie[autostart,loop]{
+        \includegraphics[width=0.7\textwidth]{fig/photos/embedded_mpc_thumbnail.jpg}
+      }{videos/embedded_mpc.mp4}\\
+      Video: \url{http://youtu.be/AXI_rkQRBaE}
+
+    \end{center}
+  \end{block}}
+
+  \only<+>{\begin{block}{Embedded Model Predictive Control}
+    \begin{center}
+      \mymovie[autostart,loop]{
+        \includegraphics[width=0.7\textwidth]{fig/photos/mmar_vojta_thumbnail.jpg}
+      }{videos/mmar_vojta.mp4}\\
+      Video: \url{http://youtu.be/9Bpm4J31CgE}
+    \end{center}
+  \end{block}}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{UAV Experimentation in MRS --- 2012--2015}
+
+  \begin{itemize}
+    \item Custom and purpose-built hardware
+    \item Embedded software
+    {\color{red} \item not Scalable! Bottlenecks everywhere
+    \item embedded programming is \emph{cumbersome}
+    \item simulating is difficult (custom-built hardware does not help)
+    \item system is hard-to-maintain
+    \item low modularity
+    \item available sensors and peripheries limited}
+  \end{itemize}
+
+  \begin{block}{Publications}
+    \cite{saska2013adhoc}, \cite{chudoba2014localization}, \cite{baca2016embedded}, \cite{saska2017documentation}, \cite{chudoba2016exploration}, \cite{saska2016formations}, \cite{spurny2016complex}, \cite{saska2017system}
+  \end{block}
+
+\end{frame}
+
+%%}
+
+%%{ CURRENT SYSTEM diagram
+
+\begin{frame}
+\frametitle{Current System Diagram}
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{./fig/new_diagram.png}
+\end{center}
+
+\end{frame}
+
+%%}
+
+            %%{ ROS -- Robot Operating System
+
+            \begin{frame}
+              \frametitle{ROS -- Robot Operating System}
+
+              \begin{itemize}
+                \item middleware allowing communication between programs
+                \item integrates with \texttt{C++}, Python, Bash and Zshell
+                \item makes the transition from \emph{Matlab} to reality bearable
+                \item supported by sensor manufacturers
+                \item integration through the Linux terminal
+                \item out of the box: time and clock management, logging, recording onboard data, visualization and plotting, parameter loading, static and dynamic transformations, etc.
+                \item integrates to robotic simulators: Gazebo, Coppelia (V-REP)
+              \end{itemize}
+
+              \begin{figure}
+                \includegraphics[width=0.3\textwidth]{fig/ros_logo.jpg}
+              \end{figure}
+
+            \end{frame}
+
+            %%}
+
+%% | ------------ Control pipeline - implementation ----------- |
+
+\section{UAV Control pipeline}
+\subsection{Control -- math point of view}
+
+%%{ UAV control pipepline
+
+\begin{frame}
+  \frametitle{Control theory point of view}
+
+  \begin{figure}
+    \begin{adjustbox}{max totalsize={1.0\textwidth}{.85\textheight}, center}
+      \input{fig/tikz/pipeline_diagram.tex}
+    \end{adjustbox}
+  \end{figure}
+
+  \fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+%%}
+
+\subsection{Control -- implementation point of view}
+
+%%{ From theory to practical experiments
+
+%%{ Linear Kalman filter
+
+\begin{frame}
+  \frametitle{From theory to practical experiments}
+
+  \begin{columns}[c]
+
+    \onslide<1->{\column{0.48\textwidth} % Left column and width
+    \begin{block}{Linear Kalman Filter $\approx$ 10 lines}
+      \begin{adjustbox}{max totalsize={1.0\textwidth}{.85\textheight}, center}
+        \input{fig/tikz/kalman.tex}
+      \end{adjustbox}
+    \end{block}}
+
+    \onslide<2>{\column{0.48\textwidth} % Right column and width
+    \begin{block}{Linear Kalman Filter in practice}
+      \begin{itemize}
+        \item $\ge$ 1000 lines of \texttt{C++} code
+        \item Real-world fusion \& estimation\\
+          $\ge$ 10 000 lines of \texttt{C++} code
+      \end{itemize}
+    \end{block}}
+
+  \end{columns}
+
+\end{frame}
+
+%%}
+
+%%{ Control
+
+\begin{frame}
+  \frametitle{From theory to practical experiments}
+
+  \begin{columns}[c]
+
+    \column{0.60\textwidth} % Left column and width
+    \onslide<1->{\vspace{-1em}
+\begin{block}{Geometric tracking controller $\approx$ 10 lines}
+\vspace{-1em}
+\tiny\begin{align}
+\mathbf{f}_d &= \minus m_e\mathbf{k}_p\circ \mathbf{e}_p \minus m_e\mathbf{k}_v\circ \mathbf{e}_v \plus m_e\ddot{\mathbf{r}}_d \minus m_eg\mathbf{\hat{e}}_3 \minus \mathbf{d}_w\circ \left[\begin{smallmatrix}
+1\\
+1\\
+0
+\end{smallmatrix}\right] \minus \mathbf{d}_b\circ \left[\begin{smallmatrix}
+1\\
+1\\
+0
+\end{smallmatrix}\right],\nonumber\\
+\mathbf{e}_R &= \frac{1}{2}\left(\mathbf{R}_d^\intercal\mathbf{R} - \mathbf{R}^\intercal\mathbf{R}_d\right),\nonumber\\
+\bm{\omega}_d &= \minus \mathbf{k}_R\circ \mathbf{e}_R \plus \bm{\omega}_j \minus \bm{\omega}_c,\nonumber
+\end{align}
+\vspace{-1em}
+\end{block}}
+
+\onslide<2->{
+\vspace{-0.5em}
+\begin{block}{MPC controller $\approx$ 100 lines}
+\vspace{-1em}
+\scriptsize{
+\begin{align*}
+  & \min_{\mathbf{u}_{[1:n]}}\nonumber
+  & \frac{1}{2}\sum_{i=1}^{n-1}\left(\mathbf{e}^\intercal_{[i]}\mathbf{Q}\mathbf{e}_{[i]}\right) + \mathbf{e}^\intercal_{[n]}\mathbf{S}\mathbf{e}_{[n]}
+\end{align*}\begin{align*}
+  \text{s.t.}~ \mathbf{x}_{m[i]} &= \mathbf{A}_m\mathbf{x}_{m[i-1]} \plus \mathbf{B}_m\mathbf{u}_{[i]}, &\forall i &\in \{1, \hdots, n\}\nonumber\\
+  \mathbf{x}_{m[i]} &\leq \mathbf{x}_{\mathrm{max}}, &\forall i &\in \{1, \hdots, n\}\nonumber\\
+  \mathbf{x}_{m[i]} &\geq \minus \mathbf{x}_{\mathrm{max}}, &\forall i &\in \{1, \hdots, n\}\nonumber \\
+  \mathbf{u}_{[i]} \minus \mathbf{u}_{[i\minus 1]} &\leq \dot{\mathbf{u}}_{\mathrm{max}} \Delta t, &\forall i &\in \{2, \hdots, n\}\nonumber\\
+  \mathbf{u}_{[i]} \minus \mathbf{u}_{[i\minus 1]} &\geq \minus \dot{\mathbf{u}}_{\mathrm{max}} \Delta t, &\forall i &\in \{2, \hdots, n\}\nonumber
+\end{align*}
+}
+\vspace{-1em}
+\end{block}}
+
+\column{0.38\textwidth} % Right column and width
+
+\onslide<3>{\begin{block}{UAV Control in practice}
+\begin{itemize}
+\item $\ge$ 10 000 lines of \texttt{C++} code
+\end{itemize}
+\end{block}}
+
+\end{columns}
+
+\end{frame}
+
+%%}
+
+%%{ From theory to practical experiments
+
+\begin{frame}
+  \frametitle{From theory to practical experiments}
+
+  \begin{columns}[c]
+
+    \column{0.70\textwidth} % Left column and width
+    \begin{block}{What needs to be solved outside of Matlab's sandbox?}
+      \begin{itemize}
+        \item UAV crashes are expensive, so don't crash
+        \item Software runtime errors cause UAV crashes
+        \item control references might not be feasible
+        \item sensors can get disconnected during the flight
+        \item takeoff and landing: \textbf{the most tricky part of the flight}
+        \item mass (thus the model) can change during the flight
+        \item controllers can be poorly tuned... handle instabilities
+        \item acceleration and speed depend on the available sensors
+        \item people are fallible, don't let them crash the drones
+        \item not all states of UAV are allowed, even though controllers can reach them (upside down)
+      \end{itemize}
+    \end{block}
+
+    \column{0.28\textwidth} % Right column and width
+    \begin{block}{The failsafe core}
+      \texttt{if (goingToCrash())}\\
+      \texttt{~~~~dont();}
+    \end{block}
+
+  \end{columns}
+
+\end{frame}
+
+%%}
+
+\begin{frame}
+\frametitle{Pushing the chances --- 14 UAVs in a swarm}
+
+  \begin{center}
+    \mymovie[autostart,loop]{
+      \includegraphics[width=0.9\textwidth]{./videos/swarm_14uavs_field_thumbnail.jpg}
+    }{./videos/swarm_14uavs_field.mp4}\\
+  \end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Pushing the chances too much}
+
+\begin{center}
+  \mymovie[autostart,loop]{
+    \includegraphics[width=0.9\textwidth]{./videos/crashes_thumbnail.jpg}
+  }{./videos/crashes.mp4}\\
+\end{center}
+
+\end{frame}
+
+%%}
+
+%% | --------------------- MRS UAV System --------------------- |
+
+%%{ System diagram
+
+\begin{frame}
+
+\frametitle{The MRS UAV System}
+
+  \begin{block}{MRS UAV System block diagram}
+    \begin{figure}
+      \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+        \only<1>{\input{./fig/tikz/pipeline_diagram.tex}}
+        \only<2>{\input{./fig/tikz/pipeline_diagram_controller.tex}}
+      \end{adjustbox}
+    \end{figure}
+  \end{block}
+
+  \fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+%%}
+
+\subsection{Reference controllers}
+
+%%{ Reference controllers
+
+%%{ Heading-compliant control design
+
+\begin{frame}
+\frametitle{Reference controllers --- Attitude rate}
+
+\begin{block}{\small Heading-compliant control design}
+  \small Heading $\eta = \mathrm{atan2}\left(\mathbf{\hat{b}}_1^\intercal\mathbf{\hat{e}}_2, \mathbf{\hat{b}}_1^\intercal\mathbf{\hat{e}}_1\right) = \mathrm{atan2}\left(\mathbf{h}_{(2)}, \mathbf{h}_{(1)}\right)$ as the $4^{\mathrm{th}}$ DOF (instead of \emph{yaw)}.
+\end{block}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+\begin{block}{\small \emph{SO(3)} attitude controller \cite{lee2010geometric}}
+  \begin{itemize}
+    \item \scriptsize Custom heading-compliant desired orientation:
+  \end{itemize}
+
+  \begin{equation}
+    \scriptsize
+    \mathbf{R}_d = \left[\mathbf{\hat{b}}_{1d}, \mathbf{\hat{b}}_{2d}, \mathbf{\hat{b}}_{3d}\right],
+  \end{equation}
+
+  \begin{equation}
+    \scriptsize
+    \mathbf{b}_{1d} = \mathbf{O}(\mathbf{P}^\intercal\mathbf{O})^{-1}\mathbf{P}^\intercal\,\mathbf{\hat{h}}_d,\ \mathbf{\hat{b}}_{1d} = \frac{\mathbf{b}_{1d}}{\|\mathbf{b}_{1d}\|},
+  \end{equation}
+
+  \begin{equation}
+    \scriptsize
+    \hat{\mathbf{b}}_{2d} = \mathbf{\hat{b}}_{3d}\times \mathbf{\hat{b}}_{1d}.
+  \end{equation}
+
+\end{block}
+
+\column{0.48\textwidth} % Right column and width
+
+  \vspace{-1em}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.90\textwidth]{fig/sketch/coordinate_frames_platform.pdf}
+    % \caption{
+    %   The image depicts the world frame $\mathcal{W}$ = $\{\mathbf{\hat{e}}_1$, $\mathbf{\hat{e}}_2$, $\mathbf{\hat{e}}_3\}$ in which the 3D position and the orientation of the \ac{UAV} body is expressed.
+    %   The body frame $\mathcal{B}$ = $\{\mathbf{\hat{b}}_1$, $\mathbf{\hat{b}}_2$, $\mathbf{\hat{b}}_3\}$ relates to $\mathcal{W}$ by the translation $\mathbf{r} = \left[x, y, z\right]^{\intercal}$ and by rotation $\mathbf{R}^{\intercal}$.
+    %   The \ac{UAV} heading vector $\mathbf{h}$, which is a projection of $\hat{\mathbf{b}}_1$ to the plane $span\left(\mathbf{\hat{e}}_1, \mathbf{\hat{e}}_2\right)$, forms the heading angle $\eta = \mathrm{atan2}\left(\mathbf{\hat{b}}_1^\intercal\mathbf{\hat{e}}_2, \mathbf{\hat{b}}_1^\intercal\mathbf{\hat{e}}_1\right) = \mathrm{atan2}\left(\mathbf{h}_{(2)}, \mathbf{h}_{(1)}\right)$.
+    %   }
+  \end{figure}
+
+\end{columns}
+
+\fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+%%}
+
+\begin{frame}
+\frametitle{Reference controllers --- Desired force and heading rate}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+\begin{block}{\small Geometric tracking on \emph{SE(3)} \cite{lee2010geometric}}
+  \begin{equation}
+    \scriptsize
+    \begin{split}
+      \mathbf{f}_d = &\overbrace{-m_e\mathbf{k}_p\circ \mathbf{e}_p}^{\begin{tabular}{c}
+        \tiny position\\
+        \tiny feedback
+      \end{tabular}} + \overbrace{-m_e\mathbf{k}_v\circ \mathbf{e}_v}^{\begin{tabular}{c}
+        \tiny velocity\\
+        \tiny feedback
+      \end{tabular}} + \overbrace{m_e\ddot{\mathbf{r}}_d}^{\begin{tabular}{c}
+        \tiny reference\\
+        \tiny feedforward
+      \end{tabular}} + \\
+      & \underbrace{m_eg\mathbf{\hat{e}}_3}_{\begin{tabular}{c}
+        \tiny gravity\\
+        \tiny compensation
+      \end{tabular}} + \underbrace{-\mathbf{d}_w\circ \left[\begin{smallmatrix}
+        1\\
+        1\\
+        0
+      \end{smallmatrix}\right]}_{\begin{tabular}{c}
+        \tiny world disturbance\\
+        \tiny compensation
+      \end{tabular}} + \underbrace{-\mathbf{d}_b\circ \left[\begin{smallmatrix}
+        1\\
+        1\\
+        0
+      \end{smallmatrix}\right]}_{\begin{tabular}{c}
+        \tiny body disturbance\\
+        \tiny compensation
+      \end{tabular}},
+    \end{split}
+  \end{equation}
+\end{block}
+
+\column{0.48\textwidth} % Right column and width
+
+\begin{block}{\small Linear MPC}
+  \begin{equation}
+    \scriptsize
+    \begin{split}
+      \mathbf{f}_d = &\overbrace{m_e\ddot{\mathbf{r}}_d}^{\begin{tabular}{c}
+        \tiny reference \\
+        \tiny feedforward
+      \end{tabular}} + \overbrace{m_e\mathbf{c}_d}^{\begin{tabular}{c}
+        \tiny MPC \\
+        \tiny feedforward
+      \end{tabular}} + \overbrace{m_eg\mathbf{\hat{e}}_3}^{\begin{tabular}{c}
+        \tiny gravity \\
+        \tiny compensation
+      \end{tabular}} + \\
+      &\underbrace{-\mathbf{d}_w\circ \left[\begin{smallmatrix}
+        1\\
+        1\\
+        0
+      \end{smallmatrix}\right]}_{\begin{tabular}{c}
+        \tiny world disturbance\\
+        \tiny compensation
+      \end{tabular}} + \underbrace{-\mathbf{d}_b\circ \left[\begin{smallmatrix}
+        1\\
+        1\\
+        0
+      \end{smallmatrix}\right]}_{\begin{tabular}{c}
+        \tiny body disturbance\\
+        \tiny compensation
+      \end{tabular}}.
+    \end{split}
+  \end{equation}
+
+  \scriptsize \textbf{MPC feedforward:} desired acceleration from a constrained linear MPC.
+\end{block}
+
+\end{columns}
+
+\fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+%%}
+
+\subsection{State estimators}
+
+%%{ Estimator
+
+\begin{frame}
+
+\frametitle{The MRS UAV System}
+
+  \begin{block}{MRS UAV System block diagram}
+    \begin{figure}
+      \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+        \input{./fig/tikz/pipeline_diagram_estimator.tex}
+      \end{adjustbox}
+    \end{figure}
+  \end{block}
+
+  \fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{The MRS UAV System}
+
+  \begin{columns}[c]
+
+  \column{0.55\textwidth} % Left column and width
+
+  \begin{block}{Bank of filters}
+
+    \begin{figure}
+      \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+        \input{./fig/tikz/bank_of_filters.tex}
+      \end{adjustbox}
+    \end{figure}
+
+  \end{block}
+
+  \column{0.40\textwidth} % Right column and width
+
+  \begin{itemize}
+    \item simultaneous estimation of UAV state in multiple frames of reference
+    \item automatic \& manual switching of the main estimator
+    \item automatic detection of estimator failures
+    \item switching of an estimator is synchronizes throughout the control pipeline
+  \end{itemize}
+
+  \end{columns}
+
+  \fullciteinbox{petrlik2020robust}{}
+
+\end{frame}
+
+%%}
+
+\subsection{Reference generation}
+
+%%{ MPC Tracker
+
+%% | ----------------------- MPC Tracker ---------------------- |
+
+\begin{frame}
+\frametitle{The MRS UAV System}
+
+  \begin{block}{MRS UAV System block diagram}
+    \begin{figure}
+      \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+        \input{./fig/tikz/pipeline_diagram_tracker.tex}
+      \end{adjustbox}
+    \end{figure}
+  \end{block}
+
+  \fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Model Predictive Control Tracker}
+
+\textbf{Feedback and Feed-forward multicopter controllers benefit from a smooth and feasible control reference. A step in desired position or velocity is not a feasible reference.}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+\begin{block}{Problem}
+  \begin{itemize}
+    \item real-time reference generation
+    \item \SI{100}{\hertz} full state reference for controllers: $\dot{\mathbf{x}}, \ddot{\mathbf{x}}, \dot{\ddot{\mathbf{x}}}$, $\ddot{\ddot{\mathbf{x}}}$, where $\mathbf{x} = \begin{pmatrix}
+    r_x, r_y, r_z, \eta
+    \end{pmatrix}^\intercal$ (pose and heading)
+    \item UAV dynamics constraints satisfaction
+    \item user input: trajectory consisting of poses sampled at regular intervals
+  \end{itemize}
+\end{block}
+
+\column{0.48\textwidth} % Right column and width
+
+\begin{block}{Solution}
+  \begin{itemize}
+    \item onboard real-time simulation of the linear translational UAV dynamics
+    \item linear MPC (LCQP) solved at 100 Hz
+    \item states of the simulated model sampled and taken as control reference
+    \item \SI{8}{\second} prediction horizon used for inter-UAV collision avoidance
+  \end{itemize}
+\end{block}
+
+\end{columns}
+
+\fullciteinbox{baca2018model}{}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Model Predictive Control Tracker}
+
+\includegraphics[width=1.0\textwidth,trim={0 0.5cm 0 1.0cm},clip]{./fig/photos/tracker.jpg}
+
+\begin{block}{Properties}
+
+  \vspace{-1em}
+
+  \begin{columns}[c]
+
+  \column{0.48\textwidth} % Left column and width
+
+  \begin{itemize}
+    \item Linear MPC is solved in real time
+    \item Mutual collision avoidance prevent damage during experimentation
+  \end{itemize}
+
+  \column{0.48\textwidth} % Right column and width
+  \begin{itemize}
+    \item The LCQP can be solved reliably
+    \item The tracker can handle unfeasible trajectory references from a user
+  \end{itemize}
+
+  \end{columns}
+
+\end{block}
+
+% \fullciteinbox{baca2018model}{http://github.com/ctu-mrs/mrs_uav_trackers}
+\fullciteinbox{baca2018model}{}
+
+\end{frame}
+
+%%}
+
+%%{ control performance showcase
+
+\begin{frame}
+\frametitle{Showcase of the capabilities}
+
+\only<1>{
+  \begin{block}{Trajectory following}
+    \begin{center}
+      \mymovie[autostart,loop,start=30]{
+        \includegraphics[width=0.8\textwidth]{./videos/mrs_uav_system_thumbnail.jpg}
+      }{./videos/mrs_uav_system.mp4}\\
+      Video: \url{https://youtu.be/WsuISKwfshA}
+    \end{center}
+  \end{block}
+}
+
+\only<2>{
+  \begin{block}{Flip}
+    \begin{center}
+      \mymovie[autostart,loop]{
+        \includegraphics[width=0.8\textwidth]{./videos/flip_thumbnail.jpg}
+      }{./videos/flip.mp4}\\
+    \end{center}
+  \end{block}
+}
+
+\end{frame}
+
+%%}
+
+\subsection{Trajectory generation}
+
+%%{ Trajectory generation
+
+\begin{frame}
+\frametitle{Trajectory Generation}
+
+  \begin{block}{MRS UAV System block diagram}
+    \begin{figure}
+      \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+        \input{./fig/tikz/pipeline_diagram_trajectory_generation.tex}
+      \end{adjustbox}
+    \end{figure}
+  \end{block}
+
+  \fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Trajectory Generation}
+
+\begin{block}{Path $\rightarrow$ Feasible Trajectory}
+\includegraphics[width=0.9\textwidth]{./fig/trajectory_generation.jpg}
+\end{block}
+
+\begin{center}
+  Fork of {\color{blue} ethz-asl/mav\_trajectory\_generation}
+\end{center}
+
+\fullciteinbox{richter2016polynomial}{}
+\fullciteinbox{burri2015realtime}{}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Trajectory Generation --- Improvements and beyond}
+
+\begin{itemize}
+  \item + smooth continuation of the prior UAV motion (Requires MPC Trackers)
+  \item + Fallback solution if nlopt fails to optimize
+  \item fixed poorly-implemented trajectory sampling
+  \item + asynchronous time-outing
+  \item recursive segment sub sectioning to meet desired corridor constraints
+\end{itemize}
+
+\fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Trajectory Generation}
+
+\begin{block}{DARPA SubT Virtual - 2021}
+  \begin{center}
+    \mymovie[autostart,loop]{
+      \includegraphics[width=0.8\textwidth]{./videos/darpa_virtual_cave_thumbnail.jpg}
+    }{./videos/darpa_virtual_cave_short.mp4}\\
+  \end{center}
+\end{block}
+
+\end{frame}
+
+%%}
+
+%% | --------------------- Implementation --------------------- |
+
+\section{MRS UAV System --- Implementation}
+
+%%{ Implementation diagram
+
+\begin{frame}
+\frametitle{MRS UAV System --- implementation}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+\begin{block}{Modular system architecture}
+  \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+    \input{./fig/tikz/implementation_diagram.tex}
+  \end{adjustbox}
+\end{block}
+
+\column{0.48\textwidth} % Right column and width
+
+\begin{itemize}
+  \item implementation in ROS1 (Noetic, Melodic)
+  \item Flight software all in C++
+  \item the system's core is nodeleted, running as a single process
+  \item controllers as modules
+  \item trackers as modules
+\end{itemize}
+
+\end{columns}
+
+\begin{block}{Emphasis on safety and repeatability}
+  \begin{itemize}
+    \item self-checking system with fallbacks for most real-world faults
+    \item protection of the UAV from the user
+  \end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Full implementation diagram}
+
+  \includegraphics[width=1.0\textwidth]{./fig/full_diagram.jpg}
+
+\end{frame}
+
+%%}
+
+%%{ Software available
+
+\begin{frame}
+\frametitle{Software available as open-source}
+
+\begin{block}{System provided as open source project as $>=$ 70 GitHub packages}
+  \centering
+  \Large\url{https://github.com/ctu-mrs/mrs_uav_system}
+\end{block}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+  \begin{block}{Available software}
+    \begin{itemize}
+      \item Core control pipeline
+      \item Sensor drivers
+      \item SLAMs
+      \item Libraries and utilities
+    \end{itemize}
+  \end{block}
+
+\column{0.48\textwidth} % Right column and width
+
+  \begin{block}{Gazebo Simulation pipeline}
+    \begin{itemize}
+      \item Realistic simulation of our UAVs
+      \item Dynamic UAV spawning \& de-spawning
+      \item Modular sensor attachment mechanism
+      \item Realistic modeling of common sensors
+    \end{itemize}
+  \end{block}
+
+\end{columns}
+
+\includegraphics[width=1.0\textwidth]{./fig/uavs.png}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{MRS UAV Platforms}
+
+\begin{block}{Fly4Future --- customized platforms for research and development}
+  \begin{center}
+    \Large\url{https://dronebuilder.fly4future.com}
+  \end{center}
+\end{block}
+
+\begin{block}{MRS group's UAVs are available}
+  \includegraphics[width=1.0\textwidth]{./fig/uavs.png}
+\end{block}
+
+\end{frame}
+
+%%}
+
+%%{ Standalone Installation
+
+\begin{frame}
+\frametitle{System installation --- Research and development}
+
+  \begin{block}{Visit the main entry point to install the system}
+    \centering
+    \Large\url{https://github.com/ctu-mrs/mrs_uav_system}
+  \end{block}
+
+  \begin{columns}[c]
+
+  \column{0.48\textwidth} % Left column and width
+  \begin{block}{{\color{red} Native installation}}
+    \begin{itemize}
+      \item not recommended for normal use
+      \item allows changing and re-compiling the MRS UAV System
+      \item might be more difficult to maintain up-to-date
+      \item go-to for MRS members
+    \end{itemize}
+  \end{block}
+
+  \column{0.48\textwidth} % Right column and width
+  \begin{block}{Container installation}
+    \begin{itemize}
+      \item Requires Linux Kernel
+      \item easier to use
+      \item easier to keep up-to-date
+      \item faster installation, lighter footprint on your system
+      \item {\color{red} difficult to change the sources of the MRS UAV System}
+    \end{itemize}
+  \end{block}
+
+  \end{columns}
+
+\end{frame}
+
+%%}
+
+%%{ Summer School Installation
+
+\begin{frame}
+\frametitle{System installation --- Summer School 2022}
+
+\begin{block}{Visit the Summer School 2022 repository}
+  \centering
+  \Large\url{https://github.com/ctu-mrs/summer-school-2022}
+\end{block}
+
+\begin{block}{What should you do?}
+  \begin{itemize}
+    \item (recommended) fork it
+    \item clone it
+    \item run \texttt{install.sh}
+    \item (... work on the software in \texttt{mrim\_task/} ... ):
+    \item run \texttt{simulation/run\_offline.sh} for lightweight emulation
+    \item run \texttt{simulation/run\_simulation.sh} for Gazebo simulation
+  \end{itemize}
+\end{block}
+
+\end{frame}
+
+%%}
+
+\section{Summer School Task --- Installation}
+
+%%{ Conclusion
+
+\begin{frame}
+  \frametitle{Conclusion}
+
+  \begin{center}
+    \huge Thanks for your attention\\
+    \begin{center}
+      \mymovie[autostart]{
+        \includegraphics[width=0.7\textwidth]{./videos/flip_thumbnail.jpg}
+      }{./videos/flip.mp4}\\
+    \end{center}
+  \end{center}
+
+\end{frame}
+
+%%}
+
+%%{ References
+
+\DeclareCiteCommand{\fullcite}
+{\usebibmacro{prenote}}
+{\clearfield{addendum}%
+  \usedriver
+  {\defcounter{minnames}{6}%
+  \defcounter{maxnames}{6}}
+{\thefield{entrytype}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  \tiny{
+    \printbibliography[heading=none,title={}]
+  }
+\end{frame}
+
+%%}
+
+\end{document}

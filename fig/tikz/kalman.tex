@@ -1,0 +1,63 @@
+\begin{tikzpicture}[->,>=stealth']
+
+% Position of PREDICTION
+% Use previously defined 'state' as layout (see above)
+% use tabular for content to get columns/rows
+  % parbox to limit width of the listing
+\node[state] (PREDICTION)
+{
+  \begin{tabular}{c}
+  Prediction phase\\
+    \begin{tabular}{rcl}
+  $\hat{\textbf{x}}_{[t]}$ & $\leftarrow$ & $\textbf{A}\hat{\textbf{x}}_{[t-1]} + \textbf{B}\textbf{u}_{[t-1]}$ \\
+    $\hat{\boldsymbol{\Sigma}}_{[t]}$ & $\leftarrow$ & $\textbf{A}\hat{\boldsymbol{\Sigma}}_{[t-1]}\textbf{A}^{T} + \textbf{R}$
+    \end{tabular}
+  \end{tabular}
+};
+
+  % State: CORRECTION with different content
+\node[state,    	% layout (defined above)
+  below of=PREDICTION, 	% Position is to the right of PREDICTION
+  node distance=3.5cm, 	% distance to PREDICTION
+  anchor=center] (CORRECTION) 	% posistion relative to the center of the 'box'
+{%
+  \begin{tabular}{c}
+  Correction phase\\
+    \begin{tabular}{rcl}
+  $\textbf{K}_{[t]}$ & $\leftarrow$ & $\hat{\boldsymbol{\Sigma}}_{[t]}\textbf{W}^{T}\left(\textbf{W}\hat{\boldsymbol{\Sigma}}_{[t]}\textbf{W}^{T} + \textbf{M}\right)^{-1}$ \\
+    $\hat{\textbf{x}}_{[t]}$ & $\leftarrow$ & $\hat{\textbf{x}}_{[t]} + \textbf{K}_{[t]}\left(\textbf{z}_{[t]} - \textbf{W}\hat{\textbf{x}}_{[t]}\right)$ \\
+    $\hat{\boldsymbol{\Sigma}}_{[t]}$ & $\leftarrow$ & $\left(\mathbf{I} - \textbf{K}_{[t]}\textbf{W}\right)\hat{\boldsymbol{\Sigma}}_{[t]}$ \\
+    \end{tabular}
+  \end{tabular}
+};
+
+\node[nothing,    	% layout (defined above)
+  left of=PREDICTION, 	% Position is to the right of QUERY
+  node distance=5cm, 	% distance to QUERY
+  anchor=center] (PRED_IN) 	% posistion relative to the center of the 'box'
+{};
+
+\node[nothing,    	% layout (defined above)
+  left of=CORRECTION, 	% Position is to the right of QUERY
+  node distance=6cm, 	% distance to QUERY
+  anchor=center] (CORR_IN) 	% posistion relative to the center of the 'box'
+{};
+
+% draw the paths and and print some Text below/above the graph
+\path (PREDICTION) 	edge[bend left=30]  node[anchor=west]
+{
+  $\hat{\textbf{x}}_{[t]}$, $\hat{\boldsymbol{\Sigma}}_{[t]}$
+} (CORRECTION)
+(CORRECTION) 	edge[bend left=30]  node[anchor=east]
+{
+  \begin{tabular}{c}
+  $\hat{\textbf{x}}_{[t]}$, $\hat{\boldsymbol{\Sigma}}_{[t]}$ \\
+    $t \leftarrow t + 1$
+    \end{tabular}
+} (PREDICTION)
+
+(PRED_IN) edge[] node[anchor=south] {Input} node[anchor=north] {\textbf{u}} (PREDICTION)
+
+  (CORR_IN) edge[] node[anchor=south] {Measure} node[anchor=north] {$\textbf{z}, \textbf{M}, \textbf{W}$} (CORRECTION);
+
+  \end{tikzpicture}
