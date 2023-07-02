@@ -8,7 +8,7 @@ SWAP_SCREENS="false"
 # MONITORS="--presenter-screen=eDP-1 --presentation-screen=DP-1"
 
 # timer in minutes
-TIMER="60"
+TIMER="30"
 
 # start from page #n
 PAGE=""
