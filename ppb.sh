@@ -16,3 +16,4 @@ cp $INPUT_FILE $OUTPUT_FILE
 
 $VIM_BIN $HEADLESS -nEs -c '%g/url =/norm dd' -c "wqa" -- "$OUTPUT_FILE"
 $VIM_BIN $HEADLESS -nEs -c '%g/doi =/norm dd' -c "wqa" -- "$OUTPUT_FILE"
+$VIM_BIN $HEADLESS -nEs -c '%g/addendum =/norm dd' -c "wqa" -- "$OUTPUT_FILE"

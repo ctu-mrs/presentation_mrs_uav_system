@@ -257,9 +257,9 @@
     %%{ TITLE PAGE
 
 
-    \title[MRS UAV System]{MRS UAV System for real-world testing and development}
-    \subtitle{From control theory to practice}
-    \author[Tomas Baca]{{Tomas Baca, Ph.D.} \\
+    \title[MRS UAV System]{MRS UAV System for Real-world Testing and Development with Multirotor Aerial Vehicles}
+    \subtitle{From control theory to practical use}
+    \author[Tomas Baca]{{Tomas Baca} \\
     }
     \institute[CTU in Prague] {
       \begin{small}
@@ -267,7 +267,7 @@
         Czech Technical University in Prague
       \end{small}}
 
-    \date[August 1st, 2022]{}
+    \date[July 3rd, 2023]{}
 
     \titlegraphic{\includegraphics[width=5cm]{fig/logo_ctu_fee_mrs_blue.png}}
 
@@ -340,7 +340,7 @@
 
   \only<+>{\begin{block}{Embedded Model Predictive Control}
     \begin{center}
-      \mymovie[autostart,loop]{
+      \mymovie[autostart,loop,start=15]{
         \includegraphics[width=0.7\textwidth]{fig/photos/mmar_vojta_thumbnail.jpg}
       }{videos/mmar_vojta.mp4}\\
       Video: \url{http://youtu.be/9Bpm4J31CgE}
@@ -356,11 +356,11 @@
     \item Custom and purpose-built hardware
     \item Embedded software
     {\color{red} \item not Scalable! Bottlenecks everywhere
-    \item embedded programming is \emph{cumbersome}
-    \item simulating is difficult (custom-built hardware does not help)
-    \item system is hard-to-maintain
+    \item embedded programming was \emph{cumbersome}
+    \item simulating was difficult (custom-built hardware did not help)
+    \item system maintenance was not flexible
     \item low modularity
-    \item available sensors and peripheries limited}
+    \item limited availability of sensors and peripheries}
   \end{itemize}
 
   \begin{block}{Publications}
@@ -396,7 +396,7 @@
                 \item supported by sensor manufacturers
                 \item integration through the Linux terminal
                 \item out of the box: time and clock management, logging, recording onboard data, visualization and plotting, parameter loading, static and dynamic transformations, etc.
-                \item integrates to robotic simulators: Gazebo, Coppelia (V-REP)
+                \item integrates to robotic simulators: Gazebo, Coppelia (V-REP), AirSim
               \end{itemize}
 
               \begin{figure}
@@ -406,6 +406,44 @@
             \end{frame}
 
             %%}
+
+%%{ Implementation diagram
+
+\begin{frame}
+\frametitle{Modularity and abstractions}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+\begin{itemize}
+  \item Promotes collaborative development.
+  \item Allows component substitution.
+  \item Incentivises to build abstract interfaces.
+  \item Allows for distributed execution.
+  \item Makes introspection easier.
+\end{itemize}
+
+\column{0.48\textwidth} % Right column and width
+
+\begin{block}{Modular system architecture}
+  \begin{adjustbox}{max totalsize={1.0\textwidth}{.65\textheight}, center}
+    \input{./fig/tikz/implementation_diagram.tex}
+  \end{adjustbox}
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Full implementation diagram}
+
+  \includegraphics[width=1.0\textwidth]{./fig/full_diagram.jpg}
+
+\end{frame}
+
+%%}
 
 %% | ------------ Control pipeline - implementation ----------- |
 
@@ -450,9 +488,10 @@
     \onslide<2>{\column{0.48\textwidth} % Right column and width
     \begin{block}{Linear Kalman Filter in practice}
       \begin{itemize}
+        \item tens of lines in Matlab
         \item $\ge$ 1000 lines of \texttt{C++} code
         \item Real-world fusion \& estimation\\
-          $\ge$ 10 000 lines of \texttt{C++} code
+          $\ge$ 20 000 lines of \texttt{C++} code
       \end{itemize}
     \end{block}}
 
@@ -572,9 +611,10 @@
 \frametitle{Pushing the chances too much}
 
 \begin{center}
-  \mymovie[autostart,loop]{
-    \includegraphics[width=0.9\textwidth]{./fig/crashes_thumbnail.jpg}
+  \mymovie[autostart,loop,start=5]{
+    \includegraphics[width=0.75\textwidth]{./fig/crashes_thumbnail.jpg}
   }{./videos/crashes.mp4}\\
+  Video: \url{https://youtu.be/dT7b1j5Ij1I?t=148}
 \end{center}
 
 \end{frame}
@@ -970,11 +1010,13 @@
 \frametitle{Trajectory Generation --- Improvements and beyond}
 
 \begin{itemize}
-  \item + smooth continuation of the prior UAV motion (Requires MPC Trackers)
-  \item + Fallback solution if nlopt fails to optimize
+  \item fixed poorly-implemented lower bound segment time initialization
   \item fixed poorly-implemented trajectory sampling
-  \item + asynchronous time-outing
-  \item recursive segment sub sectioning to meet desired corridor constraints
+  \item recursive segment sub-sectioning for meeting desired corridor constraints
+  \item + smooth continuation of the prior UAV motion (Requires the \emph{MPC Tracker})
+  \item + Fallback solution if the \texttt{QP} optimization fails
+  \item + asynchronous execution and timeouting (with fallback solution)
+  \item + result sanitization
 \end{itemize}
 
 \fullciteinbox{baca2021mrs}{}
@@ -984,7 +1026,7 @@
 \begin{frame}
 \frametitle{Trajectory Generation}
 
-\begin{block}{DARPA SubT Virtual - 2021}
+\begin{block}{DARPA SubT Virtual - 2017--2021}
   \begin{center}
     \mymovie[autostart,loop]{
       \includegraphics[width=0.8\textwidth]{./fig/darpa_virtual_cave_thumbnail.jpg}
@@ -1100,6 +1142,105 @@
 
 \end{frame}
 
+\begin{frame}
+\frametitle{MRS UAV Simulator}
+
+\begin{block}{Current simulation pipeline}
+
+  \vspace{-1em}
+
+  \begin{columns}[c]
+
+  \column{0.48\textwidth} % Left column and width
+  \begin{itemize}
+    \item based on \textbf{Gazebo/ROS}
+    \item PX4 Software-in-the-Loop
+    \item Automated UAV customization
+  \end{itemize}
+
+  \column{0.48\textwidth} % Right column and width
+  \begin{itemize}
+    \item Realistic sensor simulation
+    \item Execution close to real time
+  \end{itemize}
+
+  \end{columns}
+
+\end{block}
+
+\begin{columns}[c]
+
+\column{0.6\textwidth} % Left column and width
+\includegraphics[width=1.0\textwidth]{./fig/gazebo_mrs_5.pdf}
+
+\column{0.38\textwidth} % Right column and width
+\includegraphics[width=1.0\textwidth]{./fig/gazebo.jpg}
+
+\end{columns}
+
+\end{frame}
+
+%%}
+
+%%{ MRS Simulation pipeline
+
+\begin{frame}
+\frametitle{MRS UAV Simulator}
+
+\vspace{-0.5em}
+
+\begin{block}{\textbf{Soon-to-be-released update}}
+  \begin{itemize}
+    \item MRS UAV System to be \textbf{Independent} on the PX4 SITL
+    \item Custom adapters for literally any simulator
+    \item Better abstractions and modularity
+  \end{itemize}
+\end{block}
+
+\vspace{-0.5em}
+
+\begin{columns}[c]
+
+\column{0.48\textwidth} % Left column and width
+
+\begin{block}{CoppeliaSim}
+  \begin{center}
+    \mymovie[autostart,loop]{
+      \includegraphics[width=0.80\textwidth]{./videos/coppelia_thumbnail.jpg}
+    }{./videos/coppelia.mp4}
+  \end{center}
+\end{block}
+
+\column{0.48\textwidth} % Right column and width
+
+\begin{block}{Unreal Engine 5}
+\begin{center}
+  \mymovie[autostart,loop]{
+    \includegraphics[width=0.80\textwidth]{./videos/ue5_example_thumbnail.jpg}
+  }{./videos/ue5_example.mp4}
+\end{center}
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{The MRS swarm simulator (To be released)}
+
+  \begin{center}
+    \mymovie[autostart,loop]{
+      \includegraphics[width=0.75\textwidth]{./videos/400_swarm_thumbnail.jpg}
+    }{./videos/400_swarm.mp4}\\
+    Video: \url{https://youtu.be/2UJ7aYaHOX0}
+  \end{center}
+
+  \begin{center}
+    Preview: \url{https://github.com/ctu-mrs/mrs_multirotor_simulator}
+  \end{center}
+
+\end{frame}
+
 %%}
 
 %%{ Standalone Installation
@@ -1117,21 +1258,23 @@
   \column{0.48\textwidth} % Left column and width
   \begin{block}{{\color{red} Native installation}}
     \begin{itemize}
+      \item many (many) dependencies
       \item not recommended for normal use
       \item allows changing and re-compiling the MRS UAV System
       \item might be more difficult to maintain up-to-date
-      \item go-to for MRS members
+      \item go-to for MRS members and close collaborators
     \end{itemize}
   \end{block}
 
   \column{0.48\textwidth} % Right column and width
-  \begin{block}{Container installation}
+  \begin{block}{{\color{blue} Container installation}}
     \begin{itemize}
-      \item Requires Linux Kernel
+      \item fewer dependencies (Linux Kernel, Singularity, Go)
       \item easier to use
-      \item easier to keep up-to-date
+      \item simpler to keep up-to-date
       \item faster installation, lighter footprint on your system
-      \item {\color{red} difficult to change the sources of the MRS UAV System}
+      \item better longevity than native installation
+      \item {\color{red} the MRS UAV System is \emph{baked in}}
     \end{itemize}
   \end{block}
 
@@ -1186,29 +1329,15 @@
   \Large\url{https://github.com/ctu-mrs/summer-school-2023}
 \end{block}
 
-\begin{block}{What should you do?}
+\begin{block}{Quick intro: What should you do?}
   \begin{itemize}
-    \item (recommended) \emph{fork} it (\emph{import} it)
-    \item clone it
+    \item (recommended) \textbf{import} the repository to your GitHub account (don't fork it)
+    \item \textbf{clone} the repository
     \item run \texttt{install.sh}
     \item (... work on the software in \texttt{mrim\_task/} ... ):
-    \item run \texttt{simulation/run\_offline.sh} for lightweight emulation
-    \item run \texttt{simulation/run\_simulation.sh} for Gazebo simulation
+    \item run \texttt{simulation/run\_offline.sh} for \textbf{lightweight} emulation
+    \item run \texttt{simulation/run\_simulation.sh} for \textbf{Gazebo} simulation
   \end{itemize}
-\end{block}
-
-\end{frame}
-
-%%}
-
-%%{ This presentation
-
-\begin{frame}
-\frametitle{Presentation pdf}
-
-\begin{block}{Download the pdf from GitHub}
-  \centering
-  \Large\url{https://github.com/ctu-mrs/presentation_mrs_uav_system}
 \end{block}
 
 \end{frame}
@@ -1224,12 +1353,23 @@
 
   \begin{center}
     \huge Thanks for your attention\\
-    \begin{center}
-      \mymovie[autostart]{
-        \includegraphics[width=0.7\textwidth]{./fig/flip_thumbnail.jpg}
-      }{./videos/flip.mp4}\\
-    \end{center}
   \end{center}
+
+  \begin{block}{My profile}
+    \centering
+    \Large\url{http://mrs.felk.cvut.cz/people/tomas-baca}
+  \end{block}
+
+
+  \begin{block}{Download pdf of this presentation}
+    \centering
+    \Large\url{https://github.com/ctu-mrs/presentation_mrs_uav_system}
+  \end{block}
+
+
+  \begin{block}{Cite the MRS UAV System if you use it for your research}
+    \small \fullcite{baca2021mrs}
+  \end{block}
 
 \end{frame}
 
