@@ -1,14 +1,14 @@
 #!/bin/bash
 
-SINGLE_SCREEN="false"
+SINGLE_SCREEN="true"
 
-SWAP_SCREENS="false"
+SWAP_SCREENS="true"
 
 # set the name for the monitors (use arandr to get them)
 # MONITORS="--presenter-screen=eDP-1 --presentation-screen=DP-1"
 
 # timer in minutes
-TIMER="30"
+TIMER="60"
 
 # start from page #n
 PAGE=""
