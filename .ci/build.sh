@@ -14,4 +14,4 @@ cd build
 pdftoppm -jpeg main.pdf thumbnail
 mkdir -p ../output
 mv main.pdf ../output/presentation.pdf
-mv thumbnail-01.jpg ../output/thumbnail.jpg
+mv thumbnail-001.jpg ../output/thumbnail.jpg
