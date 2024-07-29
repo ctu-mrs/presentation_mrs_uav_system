@@ -9,8 +9,8 @@
 
   \node[state, shift = {(0.0, 0.0)}] (navigation) {
       \begin{tabular}{c}
-        \footnotesize Trajectory \&\\
-        \footnotesize generation
+        \footnotesize Mission \&\\
+        \footnotesize navigation
       \end{tabular}
     };
 
@@ -42,10 +42,6 @@
       \end{tabular}
     };
 
-  \node[smallstate, below of = attitude, shift = {(-0.6, 2.05)}] (imu) {
-      \footnotesize IMU
-    };
-
   \node[state, right of = attitude, shift = {(0.7, -0)}] (actuators) {
       \begin{tabular}{c}
         \footnotesize UAV \\
@@ -53,24 +49,17 @@
       \end{tabular}
     };
 
-  \node[state, right of = actuators, shift = {(-0.8, -0)}] (sensors) {
+  \node[state, right of = actuators, shift = {(-1.0, -0)}] (sensors) {
       \begin{tabular}{c}
         \footnotesize Onboard \\
         \footnotesize sensors
       \end{tabular}
     };
 
-  \node[state, below of = attitude, shift = {(0, 0.9)}] (estimator) {
+  \node[state, below of = attitude, shift = {(0, 1.0)}] (estimator) {
       \begin{tabular}{c}
         \footnotesize State \\
         \footnotesize estimator
-      \end{tabular}
-    };
-
-  \node[state, right of = estimator, shift = {(0.8, 0.0)}] (localization) {
-      \begin{tabular}{c}
-        \footnotesize Odometry \& \\
-        \footnotesize localization
       \end{tabular}
     };
 
@@ -132,18 +121,15 @@
 
   \path[->] ($(controller.south |- estimator.west)+(0, 0)$) edge [] ($(controller.south)$);
 
-  \draw[-] ($(imu.east) + (0.0, 0.0)$) -- ($(estimator.north |- imu.east) + (0.3, 0)$) edge [->] node[right, midway, shift = {(-0.2, 0.3)}] {
+  \path[->] ($(attitude.south) + (0.0, -0.1)$) edge [] node[right, midway, shift = {(0.0, 0.00)}] {
       \begin{tabular}{c}
         \footnotesize $\mathbf{R}$, $\bm{\omega}$
-    \end{tabular}} ($(estimator.north) + (0.3, 0.0)$);
+    \end{tabular}} ($(estimator.north) + (0.0, 0.00)$);
 
-  \draw[-] ($(sensors.south)+(0, 0)$) -- ($(sensors.south |- localization.east)$) edge [->] ($(localization.east)$);
-  \draw[-] ($(sensors.south)+(0.1, 0)$) -- ($(sensors.south |- localization.east) + (0.1, -0.1)$) edge [->] ($(localization.east) + (0.0, -0.1)$);
-  \draw[-] ($(sensors.south)+(-0.1, 0)$) -- ($(sensors.south |- localization.east) + (-0.1, 0.1)$) edge [->]  ($(localization.east) + (0.0, 0.1)$);
-
-  \draw[->] ($(localization.west)+(0, 0)$) -- ($(estimator.east)$);
-  \draw[->] ($(localization.west)+(0, 0.1)$) -- ($(estimator.east) + (0, 0.1)$);
-  \draw[->] ($(localization.west)+(0, -0.1)$) -- ($(estimator.east) + (0, -0.1)$);
+  \path[-] ($(sensors.south)+(0, 0)$) edge [] ($(sensors.south |- estimator.east)$) -- ($(sensors.south |- estimator.east)$) edge [->,] node[above, near start, shift = {(-0.35, -0.1)}] {
+      \begin{tabular}{c}
+        \footnotesize onboard sensor data
+    \end{tabular}}($(estimator.east)$);
 
   %%}
 
@@ -153,16 +139,16 @@
 
   \begin{pgfonlayer}{background}
     \path (attitude.west |- attitude.north)+(-0.45,0.8) node (a) {};
-    \path (imu.south -| sensors.east)+(+0.25,-0.20) node (b) {};
-    \path[rounded corners, draw=black!70, densely dotted]
+    \path (sensors.south -| sensors.east)+(+0.25,-0.20) node (b) {};
+    \path[fill=gray!3,rounded corners, draw=black!70, densely dotted]
       (a) rectangle (b);
   \end{pgfonlayer}
   \node [rectangle, above of=actuators, shift={(-0.6,0.55)}, node distance=1.7em] (autopilot) {\footnotesize UAV plant};
 
   \begin{pgfonlayer}{background}
     \path (attitude.west |- attitude.north)+(-0.25,0.47) node (a) {};
-    \path (imu.south -| attitude.east)+(+0.25,-0.10) node (b) {};
-    \path[rounded corners, draw=black!70, densely dotted]
+    \path (attitude.south -| attitude.east)+(+0.25,-0.10) node (b) {};
+    \path[fill=gray!3,rounded corners, draw=black!70, densely dotted]
       (a) rectangle (b);
   \end{pgfonlayer}
   \node [rectangle, above of=attitude, shift={(0,0.2)}, node distance=1.7em] (autopilot) {\footnotesize Embedded autopilot};
