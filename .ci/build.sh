@@ -11,7 +11,7 @@ sudo apt -y install poppler-utils imagemagick
 
 make
 cd build
-pdftoppm -jpeg main.pdf thumbnail
+# pdftoppm -jpeg main.pdf thumbnail
 mkdir -p ../output
 mv main.pdf ../output/presentation.pdf
-mv thumbnail-001.jpg ../output/thumbnail.jpg
+# mv thumbnail-001.jpg ../output/thumbnail.jpg
