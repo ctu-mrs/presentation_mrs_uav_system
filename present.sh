@@ -64,6 +64,6 @@ if [ -n "$PAGE" ]; then
   ARG_PAGE="-P $PAGE"
 fi
 
-cmd="~/git/linux-setup/submodules/pdfpc/build/bin/pdfpc $MONITORS --note-format=markdown $ARG_PAGE $ARG_NOTES $ARG_SINGLE_SCREEN $ARG_SWAP_SCREENS $ARG_TIMER $ARG_PERSIST_CACHE $ARG_DISABLE_CACHE ./build/main.pdf"
+cmd="pdf-presenter-console $MONITORS --note-format=markdown $ARG_PAGE $ARG_NOTES $ARG_SINGLE_SCREEN $ARG_SWAP_SCREENS $ARG_TIMER $ARG_PERSIST_CACHE $ARG_DISABLE_CACHE ./main.pdf"
 echo $cmd
 eval `echo $cmd`
