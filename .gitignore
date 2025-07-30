@@ -2,3 +2,18 @@ build
 
 *.swo
 *.swp
+*.aux
+*.bbl
+*.blg
+*.fdb
+*.fls
+*.log
+*.nav
+*.out
+*.pdf
+*.pdfpc
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.fdb_latexmk
