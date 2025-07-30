@@ -10,6 +10,7 @@ sudo apt-get -y install texlive texlive-latex-extra texlive-lang-czechslovak tex
 sudo apt -y install poppler-utils imagemagick
 
 make
+make
 cd build
 # pdftoppm -jpeg main.pdf thumbnail
 mkdir -p ../output
