@@ -1,7 +1,3 @@
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
-
 \documentclass[aspectratio=169,9pt]{beamer}
 
 \mode<presentation> {
@@ -575,6 +571,24 @@
 
 \begin{frame}
 
+\frametitle{The MRS UAV System}
+
+  \begin{block}{MRS UAV System block diagram}
+    \begin{figure}
+      \includegraphics[width=0.6\textwidth]{./fig/mrs_system_new.png}
+    \end{figure}
+  \end{block}
+
+  \fullciteinbox{baca2021mrs}{}
+
+\end{frame}
+
+%%}
+
+%%{ System diagram
+
+\begin{frame}
+
 \frametitle{The MRS UAV System - control system PoV}
 
   \begin{block}{MRS UAV System block diagram}
@@ -989,17 +1003,17 @@
 %%{ ROS -- Robot Operating System
 
 \begin{frame}
-  \frametitle{ROS -- Robot Operating System}
+  \frametitle{ROS2 -- Robot Operating System}
 
   \begin{itemize}
-    \item middleware allowing communication between programs
+    \item middleware allowing communication between independent programs even over the network
     \item integrates with \texttt{C++}, Python, Bash and Zshell
     \item makes the transition from \emph{theory} to \emph{bare metal} bearable
-    \item universally supported by sensor manufacturers
+    \item almost universally supported by sensor manufacturers
     \item used globally by the research community
-    \item integration through the Linux terminal
+    \item integration through the Linux shell
     \item out of the box: time and clock management, logging, recording onboard data, visualization and plotting, parameter loading, static and dynamic transformations, etc.
-    \item integrates to robotic simulators: Gazebo, Coppelia (V-REP), AirSim
+    \item integrates to robotic simulators: Gazebo, Coppelia (V-REP), AirSim, FlightForge
   \end{itemize}
 
   \begin{figure}
