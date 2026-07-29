@@ -235,7 +235,7 @@
         Czech Technical University in Prague
       \end{small}}
 
-    \date[July 29th, 2025]{}
+    \date[July 29th, 2026]{}
 
     \titlegraphic{\includegraphics[width=5cm]{fig/logo_ctu_fee_mrs_blue.png}}
 
@@ -1567,8 +1567,9 @@
     \begin{block}{High-fidelity visuals --- requires capable rendering engine}
       \begin{center}
         \mymovie[autostart,loop]{
-          \includegraphics[width=0.60\textwidth]{./fig/ue5_example_thumbnail.jpg}
-        }{./videos/ue5_example.mp4}
+          \includegraphics[width=0.70\textwidth]{./fig/berlin_flightforge_thumbnail.jpg}
+        }{./videos/berlin_flightforge.mp4}\\
+        Video: \url{https://youtu.be/_XCSalkl1Ys}
       \end{center}
     \end{block}
   }
@@ -1996,7 +1997,7 @@
 
   \begin{block}{Documentation}
     \begin{center}
-      \large {\color{blue} https://ctu-mrs.github.io/docs/1.5.0/introduction/}
+      \large {\color{blue} https://ctu-mrs.github.io}
     \end{center}
   \end{block}
 
@@ -2013,16 +2014,15 @@
 
 \column{0.48\textwidth} % Right column and width
 
-\begin{block}{Problematic at best}
+\begin{block}{Starting to get usable}
   \begin{itemize}
-    \item realtime issues with DDSs ($\implies$ Zenoh (2024))
-    \item buggy client libraries (executors, timers)
-    \item design regressions all over the board
-    \item performance significantly worse than ROS1
+    \item design regressions at many places
+    \item performance worse than ROS1 but ok
+    \item more complex for a \emph{generic user} to work with
   \end{itemize}
 \end{block}
 
-\begin{block}{State of transition}
+\begin{block}{State of the transition}
   \begin{center}
     \includegraphics[width=0.5\textwidth]{./fig/rros2_diagram.png}
     \url{https://ctu-mrs.github.io/ros2_obsidian_knowledgebase/main_canvas.html}
@@ -2037,18 +2037,18 @@
     \item MRS Multirotor sim
     \item FlightForge sim
     \item some sensor drivers
+    \item MRS Gazebo stack
+    \item GNSS-denied flight (LiDAR, VIO)
+    \item Octomap Mapping \& Planning
+    \item Pointcloud utils
+    \item \textbf{Documentation}
   \end{itemize}
 \end{block}
 
 \begin{block}{To be done}
   \begin{itemize}
-    \item {\color{red} MRS Gazebo stack}
-    \item {\color{red} GNSS-denied flight (LiDAR, VIO)}
-    \item {\color{red} Octomap Mapping \& Planning}
     \item {\color{red} Precise landing}
-    \item {\color{red} Pointcloud utils}
-    \item {\color{red} Lot of QoL utilities}
-    \item {\color{red} \textbf{Documentation}}
+    \item {\color{red} Some of the QoL utilities}
   \end{itemize}
 \end{block}
 
@@ -2071,13 +2071,13 @@
 
   \begin{block}{Sources}
     \begin{center}
-      \large {\color{blue} http://github.com/ctu-mrs/mrs\_uav\_system/tree/ros2}
+      \large {\color{blue} http://github.com/ctu-mrs/mrs\_uav\_system}
     \end{center}
   \end{block}
 
   \begin{block}{Documentation}
     \begin{center}
-      \large {\color{blue} https://ctu-mrs.github.io/docs/2.0.0/introduction/}
+      \large {\color{blue} https://ctu-mrs.github.io}
     \end{center}
   \end{block}
 
